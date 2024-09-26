@@ -41,4 +41,8 @@ class Componente{
       return nome;
     }
 
+    string getFome(){
+      return nome;
+    }
+
 };
