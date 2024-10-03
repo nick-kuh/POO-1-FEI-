@@ -17,12 +17,12 @@ class Componente{
       this->valor = valor;
       this->nome = nome;
     }
-    void ligar(){
-      ligado = true;
+    bool ligar(){
+      return true;
     }
 
-    void desligar(){
-      ligado = false;
+    bool desligar(){
+      return false;
     }
 
     void conectar(){
@@ -37,12 +37,29 @@ class Componente{
       return valor;
     }
 
+    bool getLigado(){
+      return ligado;
+    }
+
+    bool getConectado(){
+      return conectado;
+    }
+
     string getNome(){
       return nome;
     }
 
-    string getFome(){
-      return nome;
+    void setValor(int valor){
+      this->valor = valor;
     }
+
+    void setLigado(int ligado){
+      this->ligado = ligado;
+    }
+
+    // void setValor(bool ligado, int valor){
+    //   this->valor = valor;
+    //   this->ligado = ligado;
+    // }
 
 };

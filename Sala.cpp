@@ -12,8 +12,9 @@ class Atuador;
 class Sala {
   private:
     vector<Sensor*> sensores;
-    // Sensor& sensor;
     vector<Atuador*> atuadores;
+    bool ligado;
+    int temperatura;
 
   public:
     // Construtor para inicializar a sala com um sensor e um atuador
@@ -27,52 +28,57 @@ class Sala {
       atuadores.push_back(atuador);
     }
 
-
     // Atualiza o valor do sensor e mostra o valor lido
-    void atualizarSensores(int valor){
-      // Sensor* sensorTemperatura = nullptr;
+    void atualizarSensores(int valor, string tipo){
+      // Vai iterar para cada um dos sensores
       for (Sensor* sensor : sensores){
-        if (sensor->getNome() == "temperatura"){
+        // Sensor Temperatura
+        if (sensor->getNome() == "temperatura" && tipo == "TEMPERATURA"){
           sensor->setValor(valor);
-          cout << "Sensor Temperatura: " << valor << endl;
+          // cout << "T: " << sensor->getValor() << endl; // Teste
+          //? Perguntar pro professor sobre o printTemperatura
+          // sensor->printTemperatura(valor);
+        }
+        else if (sensor->getNome() == "luminosidade" && tipo == "LUMINOSIDADE"){
+          sensor->setValor(valor);
+          // cout << "L: " << sensor->getValor() << endl; // Teste
+
         }
       }
-      // if (sensorTemperatura != nullptr) {
-      //       cout << "Temperatura: " << sensorTemperatura->getValor() << endl;
-      //   } else {
-      //       cout << "Sensor de temperatura não encontrado." << endl;
-      //   }
     }
 
     // Atualiza o estado dos atuadores com base no valor do sensor
-    void atualizarAtuadores(int valor){
-      Sensor* sensorTemperatura = nullptr;
-      Atuador* atuadorVentilador = nullptr;
+    void atualizarAtuadores(bool ligado, int valor, string tipo){
       for (Sensor* sensor : sensores){
-        if (sensor->getNome() == "temperatura"){
-          for (Atuador* atuador : atuadores){
-            // int valor = sensor->getValor(); // Obtém o valor atual do sensor
-            bool ligado = atuador->setValor(valor); // Passa o valor para o atuador
-            if (ligado) {
-              cout << "Ventilador Ligado" << endl;
-              valor -= 1;
+        for (Atuador* atuador : atuadores){
+          // Ventilador
+          if (sensor->getNome() == "temperatura" && tipo == "TEMPERATURA"){
+            if (atuador->getNome() == "ventilador" && atuador->getConectado()){
+
+              // int valor = sensor->getValor(); // Obtém o valor atual do sensor
+              pair<bool, int> resultado = atuador->setValor(valor, ligado); // Atualiza o estado de ligado e a temperatura
+              ligado = resultado.first;
+              valor = resultado.second;
+              atuador->setLigado(ligado);
               sensor->setValor(valor);
-            } 
-            else {
-              cout << "Ventilador Desligado" << endl;
             }
           }
-        }
-      }
+      //   }
+      // }
+      // for (Sensor* sensor : sensores){
+      //   for (Atuador* atuador : atuadores){
+          // Lampada
+          if (sensor->getNome() == "luminosidade" && tipo == "LUMINOSIDADE"){
+            if (atuador->getNome() == "lampada" && atuador->getConectado()){
+              // int valor = sensor->getValor(); // Obtém o valor atual do sensor
+              pair<bool, int> resultado = atuador->setValor(valor, ligado); // Atualiza o estado de ligado e a temperatura
+              ligado = resultado.first;
+              valor = resultado.second;
+              atuador->setLigado(ligado);
+              sensor->setValor(valor);
+            }
+          }  
+        } 
+      } 
     }
 };
-
-// void atualizarAtuadores(){
-//     for (Sensor* sensor : sensores){
-//         if (sensor->getNome() == "temperatura"){
-//             for (Atuador* atuador : atuadores){
-//                 atuador->atualizar(sensor->getValor());
-//             }
-//         }
-//     }
-// }

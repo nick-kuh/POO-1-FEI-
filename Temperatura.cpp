@@ -11,10 +11,9 @@ class Temperatura: public Sensor{
     Temperatura(bool ligado, bool conectado, int valor)
       : Sensor(ligado, conectado, valor, "temperatura"){
       }
-    // Temperatura(float valor): Sensor(valor){this->valor}
 
-    float getTemperaturaEmC(){
-      return this->getValor();
+    float getTemperatura(){
+      return getValor();
     }
 
     float getTemperaturaEmF(){
@@ -25,7 +24,10 @@ class Temperatura: public Sensor{
       return this->getValor() + 273.15;
     }
 
-    virtual void setValor(int temperatura){
-      this->temperatura = temperatura;
+
+    virtual void printTemperatura(){
+      cout << "Temperatura em Celsius: " << this->getTemperatura() << endl;
+      cout << "Temperatura em Fahreinheit: " << this->getTemperaturaEmF() << endl;
+      cout << "Temperatura em Kelvin: " << this->getTemperaturaEmK() << endl;
     }
 };

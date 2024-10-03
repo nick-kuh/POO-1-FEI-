@@ -12,25 +12,44 @@ class Ventilador: public Atuador{
   public:
     Ventilador(bool ligado, bool conectado, int valor)
       : Atuador(ligado, conectado, valor, "ventilador"){
+        this->ligado = ligado;
         this->temperatura = valor;
         this->velocidade = 0;
       }
 
-    virtual bool setValor(int valor){
+    // bool getLigado(){
+    //   return this->ligado;
+    // }
+
+    virtual pair <bool, int> setValor(int valor, bool ligado){
       this->temperatura = valor;
-      if (temperatura > 29){
-        this->ligar();
-        this->setVelocidade(1);
-        if(temperatura > 60){
-          this->setVelocidade(2);
+      this->ligado = ligado;
+
+      if (ligado) {
+        if (valor < 23){
+          this->setVelocidade(0);
+          cout << "Ventilador Desligado" << endl;
+          return make_pair(this->desligar(), this->temperatura);
         }
-        return true;
+        else{
+          this->setVelocidade(1);
+          this->temperatura -= 1;
+          cout << "Ventilador Ligado" << endl;
+          return make_pair(this->ligar(), this->temperatura);
+        }
       }
       else{
-        this->desligar();
-        this->setVelocidade(0);
-        return false;
-      }    
+        if (temperatura > 25){
+          this->setVelocidade(1);
+          cout << "Ventilador Ligado" << endl;
+          return make_pair(this->ligar(), this->temperatura);
+        }
+        else{
+          this->setVelocidade(0);
+          cout << "Ventilador Desligado" << endl;
+          return make_pair(this->desligar(), this->temperatura);
+        }
+      }
     }
 
     bool setVelocidade(int velocidade) {
@@ -42,11 +61,5 @@ class Ventilador: public Atuador{
         return false; // Velocidade inválida
       }
   }
+
 };
-
-
-
-
-
-
-
