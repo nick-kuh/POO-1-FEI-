@@ -49,7 +49,7 @@ class Componente{
       return nome;
     }
 
-    void setValor(int valor){
+    void passaValor(int valor){
       this->valor = valor;
     }
 

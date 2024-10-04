@@ -3,36 +3,52 @@
 #include <unistd.h>
 #include <thread>
 #include <atomic>
-#include <conio.h>  // Usado para detectar pressionamento de tecla no Windows (getch())
-#include <cstdlib> // para usar system()
 
 #include "Sala.cpp"
 #include "Temperatura.cpp"
 #include "Luminosidade.cpp"
 #include "Ventilador.cpp"
 #include "Lampada.cpp"
+#include "print.cpp"
 using namespace std;    
+
+// Codigo para compilar no terminal
+// g++ main.cpp -o meu_programa -lpthread
+// Codigo para rodar no terminal
+// ./meu_programa
+
+//_______________________________________________________________
 
 // Variável global para detectar quando o usuário pressiona 'L'l
 atomic<bool> apertouL(false);
 atomic<bool> rodando(true);  // Variável para controlar o término das threads
 
 void detectarInput() {
-    char ch;
-    while (rodando) { // rodando é por garantia de que vai sempre funcionar
-        if (_kbhit()) {  // Verifica se há uma tecla sendo pressionada, evitando que o programa fique preso esperando um input.
-            ch = _getch();  // Detecta pressionamento de tecla
+    while (rodando) {
+        // Verifica se há entrada disponível
+        if (cin.peek() != EOF) { 
+            char ch;
+            cin >> ch; // Lê um caractere da entrada
             if (ch == 'L' || ch == 'l') {
                 apertouL = true;
+                cout << "\033[6;1H"; 
                 cout << "apertouuuu!" << endl;
+
+                // Pausa para manter a mensagem visível por 0,5 segundos
+                this_thread::sleep_for(chrono::milliseconds(500));
             }
         }
         this_thread::sleep_for(chrono::milliseconds(100));  // Pequena pausa para evitar loop rápido demais
     }
 }
 
+//_______________________________________________________________
+// Main - Chamando as classe e colocando os dados 
+
 //! Quarto
 int main() {
+
+    int n;
 
     // Inicia uma thread para monitorar a entrada do usuário
     thread inputThread(detectarInput);
@@ -74,6 +90,9 @@ int main() {
     mt19937 gen(random()); // gerar números aleatórios.
     uniform_int_distribution<> dis(0, 1); // Distribuição uniforme entre -1 e 1
 
+    // Limpando a tela uma vez no início para ter um terminal limpo
+    cout << "\033[2J";  // Sequência ANSI para limpar o terminal inteiro
+
     while (true) {
         
         // Atualiza o valor do sensor de temperatura
@@ -84,9 +103,9 @@ int main() {
             // Limita a temperatura entre 15 e 35 graus
             temperatura = max(15, min(35, temperatura));
             // Atualiza o valor do sensor de temperatura
-            sensorTemperatura.setValor(temperatura);
+            sensorTemperatura.passaValor(temperatura);
             // Imprime a temperatura
-            sensorTemperatura.printTemperatura();
+            // sensorTemperatura.printTemperatura();
 
             // Atualizando os valores dos sensores
             sala.atualizarSensores(temperatura, tipo); 
@@ -112,7 +131,7 @@ int main() {
         tipo = "LUMINOSIDADE";
 
         // Imprime a Intesidadecda Luz
-        sensorLuminosidade.printIntesidade();
+        // sensorLuminosidade.printIntesidade();
 
         // Para ligar ou desligar é apenas apertar a letra L (Luz)
         if (apertouL) {
@@ -131,10 +150,14 @@ int main() {
 
         
         // Pausa para simular o tempo passando
-        sleep(1);
-        // Limpa a tela
-        system("cls"); 
+        // sleep(1);
+        this_thread::sleep_for(chrono::milliseconds(250));
+        cout << endl;
+        print(sensorTemperatura, atuadorVentilador, sensorLuminosidade, atuadorLampada, apertouL);
         
+        cout << "\033[5;1H";
+        n += 1;
+        cout << n << endl;
     }
 
     // Espera a thread de input finalizar antes de encerrar o programa

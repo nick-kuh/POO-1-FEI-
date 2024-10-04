@@ -34,13 +34,13 @@ class Sala {
       for (Sensor* sensor : sensores){
         // Sensor Temperatura
         if (sensor->getNome() == "temperatura" && tipo == "TEMPERATURA"){
-          sensor->setValor(valor);
+          sensor->passaValor(valor);
           // cout << "T: " << sensor->getValor() << endl; // Teste
           //? Perguntar pro professor sobre o printTemperatura
           // sensor->printTemperatura(valor);
         }
         else if (sensor->getNome() == "luminosidade" && tipo == "LUMINOSIDADE"){
-          sensor->setValor(valor);
+          sensor->passaValor(valor);
           // cout << "L: " << sensor->getValor() << endl; // Teste
 
         }
@@ -60,7 +60,7 @@ class Sala {
               ligado = resultado.first;
               valor = resultado.second;
               atuador->setLigado(ligado);
-              sensor->setValor(valor);
+              sensor->passaValor(valor);
             }
           }
       //   }
@@ -75,7 +75,7 @@ class Sala {
               ligado = resultado.first;
               valor = resultado.second;
               atuador->setLigado(ligado);
-              sensor->setValor(valor);
+              sensor->passaValor(valor);
             }
           }  
         } 
