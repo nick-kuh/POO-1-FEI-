@@ -13,4 +13,9 @@ public:
       : Componente(ligado, conectado, valor, nome){
   }
 
+  virtual bool setValorSensor(int valor){
+      this->valor = valor;
+      return true;
+    }
+
 };

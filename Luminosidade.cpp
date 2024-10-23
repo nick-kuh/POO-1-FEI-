@@ -1,31 +1,40 @@
+// #pragma once
 #include "Sensor.cpp"
 #include <iostream>
 
 using namespace std;
 
 class Luminosidade: public Sensor{
-  private:
-    int temperatura;
+private:
+  int limiarClaridade;
 
-  public:
-    Luminosidade(bool ligado, bool conectado, int valor)
-      : Sensor(ligado, conectado, valor, "luminosidade"){
-      }
-
-    int getIntesidadeLuz(){
-      return getValor();
+public:
+  Luminosidade(bool ligado, bool conectado, int valor)
+    : Sensor(ligado, conectado, valor, "luminosidade"){
     }
 
-    void printIntesidade(){
-      int intesidade = this->getIntesidadeLuz();
-      cout << "Intesidade da Luz: " << intesidade << " lux" << endl;
-      if (intesidade > 340){
-        cout << "Lampada Acesa!" << endl;
-      }
-      else{
-        cout << "Lampada Apagada!" << endl;
-      }
-    }
+  virtual bool setValorSensor(int limiarClaridade){
+      this->setLimiarClaridade(limiarClaridade);
+    return true;
+  }
+
+  void setLimiarClaridade(int limiarClaridade){
+    // definirValor(limiarClaridade);
+    this->limiarClaridade = limiarClaridade;
+  }
+    
+  int getLimiarClaridade(){
+    return limiarClaridade;
+  }
+
+  int getLuminosidade(){
+    return getValor();
+  }
+
+  bool estaClaro(){
+    return (this->getLuminosidade() >= this->limiarClaridade);
+  }
+
 };
 
 

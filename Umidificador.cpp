@@ -3,17 +3,21 @@
 
 using namespace std;
 
-class Desumidificador: public Atuador{
+class Umidificador: public Atuador{
   private:
     bool ligado;
     int configuracao;
 
   public:
-    Desumidificador(bool ligado, bool conectado, int valor)
-      : Atuador(ligado, conectado, valor, "desumidificador"){
+    Umidificador(bool ligado, bool conectado, int valor)
+      : Atuador(ligado, conectado, valor, "umidificador"){
         this->ligado = ligado;
         this->configuracao = 0;
       }
+
+    // bool getLigado(){
+    //   return this->ligado;
+    // }
 
     virtual bool setValor(int velocidade){
       if (velocidade == 0){

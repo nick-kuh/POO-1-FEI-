@@ -18,10 +18,12 @@ class Componente{
       this->nome = nome;
     }
     bool ligar(){
+      this->ligado = true;
       return true;
     }
 
     bool desligar(){
+      this->ligado = false;
       return false;
     }
 
@@ -49,7 +51,7 @@ class Componente{
       return nome;
     }
 
-    void passaValor(int valor){
+    void definirValor(int valor){
       this->valor = valor;
     }
 

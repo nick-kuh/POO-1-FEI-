@@ -4,46 +4,36 @@
 using namespace std;
 
 class Lampada: public Atuador{
-  private:
-    bool ligado;
-    int intesidade;
-    int brilho;
+private:
+  bool ligado;
+  int intesidade;
+  int brilho;
 
-  public:
-    Lampada(bool ligado, bool conectado, int valor)
-      : Atuador(ligado, conectado, valor, "lampada"){
-        this->ligado = ligado;
-        this->intesidade = valor;
-        this->brilho = 0;
-      }
-
-    virtual pair <bool, int> setValor(int valor, bool ligado){
-      this->intesidade = valor;
+public:
+  Lampada(bool ligado, bool conectado, int valor)
+    : Atuador(ligado, conectado, valor, "lampada"){
       this->ligado = ligado;
-
-      if (ligado) {
-        this->intesidade -= 345;
-        this->setBrilho(0);
-        // cout << "Lampada Apagada" << endl;
-        return make_pair(this->desligar(), this->intesidade);
-      }
-
-      else{
-        this->intesidade += 345;
-        this->setBrilho(1);
-        // cout << "Lampada Acesa" << endl;
-        return make_pair(this->ligar(), this->intesidade);
-      }
+      this->intesidade = valor;
+      this->brilho = 0;
     }
 
-    bool setBrilho(int brilho) {
-      if (brilho >= 0 && brilho <= 2) {
-        this->brilho = brilho;
-        return true; // Operação bem-sucedida
-      } 
-      else {
-        return false; // Brilho inválida
-      }
+  virtual bool setValor(int intesidade){
+    if (intesidade == 0){
+      this->setBrilho(0);
+    }
+    else{
+      this->setBrilho(intesidade);
+    }
+    return true;
+  }
+
+  bool setBrilho(int brilho) {
+    this->brilho = brilho;
+    return true; // Operação bem-sucedida
+}
+
+  int getBrilho(){
+    return brilho;
   }
 
 };

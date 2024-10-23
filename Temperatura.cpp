@@ -1,33 +1,33 @@
+// #pragma once
 #include "Sensor.cpp"
 #include <iostream>
 
 using namespace std;
 
 class Temperatura: public Sensor{
-  private:
-    int temperatura;
+private:
 
-  public:
-    Temperatura(bool ligado, bool conectado, int valor)
-      : Sensor(ligado, conectado, valor, "temperatura"){
-      }
-
-    float getTemperatura(){
-      return getValor();
+public:
+  Temperatura(bool ligado, bool conectado, int valor)
+    : Sensor(ligado, conectado, valor, "temperatura"){
     }
 
-    float getTemperaturaEmF(){
-      return (this->getValor() * 1.8) + 32;
-    }
+  float getTemperaturaEmC(){
+    return getValor();
+  }
 
-    float getTemperaturaEmK(){
-      return this->getValor() + 273.15;
-    }
+  float getTemperaturaEmF(){
+    return (this->getValor() * 1.8) + 32;
+  }
+
+  float getTemperaturaEmK(){
+    return this->getValor() + 273.15;
+  }
 
 
-    virtual void printTemperatura(){
-      cout << "Temperatura em Celsius: " << this->getTemperatura() << endl;
-      cout << "Temperatura em Fahreinheit: " << this->getTemperaturaEmF() << endl;
-      cout << "Temperatura em Kelvin: " << this->getTemperaturaEmK() << endl;
-    }
+    // virtual void printTemperatura(){
+    //   cout << "Temperatura em Celsius: " << this->getTemperatura() << endl;
+    //   cout << "Temperatura em Fahreinheit: " << this->getTemperaturaEmF() << endl;
+    //   cout << "Temperatura em Kelvin: " << this->getTemperaturaEmK() << endl;
+    // }
 };

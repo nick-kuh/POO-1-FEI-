@@ -12,6 +12,9 @@ class Atuador: public Componente{
     Atuador(bool ligado, bool conectado, int valor, string nome):
     Componente(ligado, conectado, valor, nome){}
     
-    // setValor = 0, pois é um comportamento que depende de cada tipo específico de atuador
-    virtual pair <bool, int> setValor(int valor, bool ligado) = 0;
+
+    virtual bool setValor(int valor){
+      this->valor = valor;
+      return true;
+    }
 };
