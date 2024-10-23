@@ -30,7 +30,7 @@ int main() {
     // Garante que todos os caracteres especiais funcionem no terminal
     // SetConsoleOutputCP(CP_UTF8);
 
-    // msgInicial();
+    msgInicial();
 
     int escolha;
     cin >> escolha;
