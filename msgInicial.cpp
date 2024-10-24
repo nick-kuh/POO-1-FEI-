@@ -1,10 +1,11 @@
-#pragma once
-#include <iostream>
-#include <iomanip>  // Para usar std::setw
+#pragma once // Garante que o arquivo seja incluído apenas uma vez durante a compilação
+#include <iostream> // Biblioteca padrão de entrada/saída
+#include <iomanip>  // Para usar std::setw para formatação de saída
+#include <thread>   // Biblioteca para usar funções de controle de tempo e threads
 
 using namespace std;
 
-
+// Função para exibir uma mensagem de boas-vindas com arte em ASCII
 void bemVindo(){
     cout << "███████╗███████╗     ██╗ █████╗     ██████╗ ███████╗███╗   ███╗      ██╗   ██╗██╗███╗   ██╗██████╗  ██████╗ " << endl;
     cout << "██╔════╝██╔════╝     ██║██╔══██╗    ██╔══██╗██╔════╝████╗ ████║      ██║   ██║██║████╗  ██║██╔══██╗██╔═══██╗" << endl;
@@ -14,6 +15,7 @@ void bemVindo(){
     cout << "╚══════╝╚══════╝ ╚════╝ ╚═╝  ╚═╝    ╚═════╝ ╚══════╝╚═╝     ╚═╝        ╚═══╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ " << endl;
 }
 
+// Função para exibir uma mensagem "tela cheia" com arte em ASCII
 void telaCheia(){
     cout <<  "██████╗  ██████╗ ██████╗     ███████╗ █████╗ ██╗   ██╗ ██████╗ ██████╗   " << endl;
     cout <<  "██╔══██╗██╔═══██╗██╔══██╗    ██╔════╝██╔══██╗██║   ██║██╔═══██╗██╔══██╗  " << endl;
@@ -29,34 +31,40 @@ void telaCheia(){
     cout <<  "   ╚═╝   ╚══════╝╚══════╝╚═╝  ╚═╝     ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═╝ " << endl;
 }
 
+// Função para exibir o nome das salas
 void salas(){
-cout << " ███████╗ █████╗ ██╗      █████╗ ███████╗ " << endl;
-cout << " ██╔════╝██╔══██╗██║     ██╔══██╗██╔════╝ " << endl;
-cout << " ███████╗███████║██║     ███████║███████╗ " << endl;
-cout << " ╚════██║██╔══██║██║     ██╔══██║╚════██║ " << endl;
-cout << " ███████║██║  ██║███████╗██║  ██║███████║ " << endl;
-cout << " ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝ " << endl;
+    cout << " ███████╗ █████╗ ██╗      █████╗ ███████╗ " << endl;
+    cout << " ██╔════╝██╔══██╗██║     ██╔══██╗██╔════╝ " << endl;
+    cout << " ███████╗███████║██║     ███████║███████╗ " << endl;
+    cout << " ╚════██║██╔══██║██║     ██╔══██║╚════██║ " << endl;
+    cout << " ███████║██║  ██║███████╗██║  ██║███████║ " << endl;
+    cout << " ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝ " << endl;
 }                                    
 
+// Função principal que mostra a mensagem inicial, simula animação, e exibe opções de escolha
 void msgInicial(){
-    bemVindo();
-    this_thread::sleep_for(chrono::milliseconds(2500));
-    system("clear"); // Apagar o texto (limpar a tela)
+    bemVindo(); // Exibe a mensagem de boas-vindas
+    this_thread::sleep_for(chrono::milliseconds(2500)); // Pausa de 2,5 segundos
+    system("clear"); // Limpa a tela
 
-    telaCheia();
-    this_thread::sleep_for(chrono::seconds(5));
-    // Piscar o texto 3 vezes
+    telaCheia(); // Exibe a tela cheia
+    this_thread::sleep_for(chrono::seconds(5)); // Pausa de 5 segundos
+
+    // Faz o texto piscar 5 vezes
     for (int i = 0; i < 5; i++) {
-        system("clear"); // Apagar o texto (limpar a tela)
-        this_thread::sleep_for(chrono::milliseconds(400)); // Pausar por 0,4 segundos
+        system("clear"); // Limpa a tela
+        this_thread::sleep_for(chrono::milliseconds(400)); // Pausa de 0,4 segundos
 
-        telaCheia(); // Mostrar o texto novamente
-        this_thread::sleep_for(chrono::milliseconds(400)); // Pausar por 0,4 segundos
+        telaCheia(); // Exibe a tela novamente
+        this_thread::sleep_for(chrono::milliseconds(400)); // Pausa de 0,4 segundos
     }
-    system("clear"); // Apagar o texto (limpar a tela)
+    system("clear"); // Limpa a tela novamente
+
+    // Exibe as opções das salas
     salas();
     cout << "Escolha para onde ir e descubra o que cada sala revela!" << endl;
 
+    // Detalhamento das salas com uma pequena descrição
     cout << "==============================================================================================================================================================" << endl;
     cout << "1. ***** QUARTO *****" << endl;
     cout << "Algo estranho acontece quando você entra neste quarto à noite. Ao deitar na cama, o ambiente parece se transformar lentamente, como se o tempo se distorcesse." << endl;
@@ -72,12 +80,8 @@ void msgInicial(){
     cout << "==============================================================================================================================================================" << endl;
     cout << "3. ***** BANHEIRO *****" << endl;
     cout << "Depois de um banho relaxante, o vapor toma conta do ambiente." << endl;
-    cout << "Cada segundo de sono é tão profundo e reconfortante que, quando acordar, vai se perguntar por que tudo passou tão rápido." << endl;
     cout << "O espelho embaça, e o lugar parece se transformar por completo. Quer descobrir como tudo muda após o banho?" << endl;
-
-
 }
-
 
 // Escolha para onde ir e descubra o que cada sala revela.
 // 1. Quarto -> Algo estranho acontece quando você entra neste quarto à noite. Ao deitar na cama, o ambiente parece se transformar lentamente, como se o tempo se distorcesse. Cada segundo de sono é tão profundo e reconfortante que, quando acordar, vai se perguntar por que tudo passou tão rápido. Será que você está pronto para descobrir o que faz desse quarto um lugar tão único para dormir?
